@@ -25,11 +25,13 @@ Vagrant.configure("2") do |config|
     ciserver.vm.provision :shell, inline: "sudo chmod 777 /var/run/docker.sock"
   end
 
-  #configure server-2 VM
-  config.vm.define "server-2" do |server2|
-    server2.vm.network "private_network", ip: '192.168.33.62'
-    server2.vm.hostname = "server-2"
-    # server2.vm.provision :docker_compose, yml: "/vagrant/ML/docker-compose.yml", rebuild: true, run: "always" 
+   #configure ci-server VM
+   config.vm.define "cd-server" do |cdserver|
+    cdserver.vm.network "private_network", ip: '192.168.33.62'
+    cdserver.vm.hostname = "cd-server"
+    cdserver.vm.provision :file, source:"./docker/docker-compose.cd.yml", destination: "/home/vagrant/docker-compose.yml"
+    cdserver.vm.provision :docker_compose, yml:"/home/vagrant/docker-compose.yml", run:"always"
+    cdserver.vm.provision :shell, inline: "sudo chmod 777 /var/run/docker.sock"
   end
  
 end
