@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
     ciserver.vm.provision :shell, inline: 'sudo chmod 777 /var/run/docker.sock'
   end
 
-   #configure ci-server VM
+   #configure cd-server VM
    config.vm.define "cd-server" do |cdserver|
     cdserver.vm.network "private_network", ip: '192.168.33.62'
     cdserver.vm.hostname = "cd-server"
